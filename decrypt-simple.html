@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt Text</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="crypto.js"></script>
+    <style>
+        .error-message {
+            background: #ffd2d2;
+            border: 1px solid #c21313;
+            padding: 8px;
+            margin: 8px 0;
+            color: #c21313;
+        }
+        .decrypt-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="window" style="width: 400px; margin: 32px auto;">
+        <div class="title-bar">
+            <div class="title-bar-text">Decrypt Text</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <div x-data="decryptor">
+                <template x-if="!decryptedText">
+                    <div class="decrypt-form">
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" x-model="password" style="width: 100%">
+                        </div>
+
+                        <div>
+                            <label for="iterations">Iterations:</label>
+                            <input type="number" id="iterations" x-model="iterations" min="1000" max="1000000" style="width: 100%">
+                        </div>
+
+                        <template x-if="error">
+                            <div class="error-message" x-text="error"></div>
+                        </template>
+
+                        <div style="text-align: right">
+                            <button @click="decrypt" :disabled="isLoading">
+                                <span x-text="isLoading ? 'Decrypting...' : 'Decrypt'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                <template x-if="decryptedText">
+                    <div class="decrypt-form">
+                        <div>
+                            <label>Decrypted Text:</label>
+                            <textarea x-model="decryptedText" rows="3" readonly style="width: 100%"></textarea>
+                        </div>
+                        <div style="text-align: right">
+                            <div class="field-row" style="justify-content: flex-end">
+                            <button @click="reset">Decrypt Again</button>
+                            <button @click="copyText" :disabled="isLoading" style="margin-left: 4px">
+                                <span x-text="copyStatus"></span>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

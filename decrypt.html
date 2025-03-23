@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt Text</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css">
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="crypto.js"></script>
+</head>
+<body>
+    <div class="window" style="width: 400px; margin: 32px auto;">
+        <div class="title-bar">
+            <div class="title-bar-text">Decrypt Text</div>
+            <div class="title-bar-controls">
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <menu role="tablist">
+                <li role="tab">
+                    <a href="index.html">Encrypt</a>
+                </li>
+                <li role="tab" aria-selected="true">
+                    <a href="decrypt.html">Decrypt</a>
+                </li>
+            </menu>
+
+            <div x-data="decryptor" class="window-body" role="tabpanel" aria-labelledby="decrypt-tab">
+                <div class="field-row-stacked" style="width: 100%">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" x-model="password">
+                </div>
+
+                <div class="field-row-stacked" style="width: 100%">
+                    <label for="iterations">Iterations:</label>
+                    <input type="number" id="iterations" x-model="iterations" min="1000" max="1000000">
+                </div>
+
+                <div class="field-row" style="margin-top: 16px; justify-content: flex-end">
+                    <button @click="decrypt" :disabled="isLoading">
+                        <span x-text="isLoading ? 'Decrypting...' : 'Decrypt'"></span>
+                    </button>
+                </div>
+
+                <template x-if="decryptedText">
+                    <div class="field-row-stacked" style="width: 100%; margin-top: 16px">
+                        <label>Decrypted Text:</label>
+                        <textarea x-model="decryptedText" rows="8" readonly></textarea>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
