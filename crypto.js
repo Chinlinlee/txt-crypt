@@ -78,7 +78,7 @@ window.encryptor = {
             // 轉成 base64 並產生 URL
             const base64 = arrayBufferToBase64(combined);
             const url = new URL(window.location.href);
-            url.pathname = '/decrypt-simple.html';
+            url.pathname = window.location.pathname + '/decrypt-simple.html';
             url.hash = base64;
             
             this.encryptedUrl = url.toString();
